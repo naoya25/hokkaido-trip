@@ -63,11 +63,10 @@ def sendSchedule():
                     text += f"内容：{line[4]}\n"
                     text += "----------"
     print(text)
-    if text != "":
-        try:
-            line_bot_api.broadcast(messages=TextSendMessage(text=text))
-        except InvalidSignatureError:
-            abort(400)
+    try:
+        line_bot_api.broadcast(messages=TextSendMessage(text=text))
+    except InvalidSignatureError:
+        abort(400)
 
 
 if __name__ == "__main__":
