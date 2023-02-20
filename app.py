@@ -6,8 +6,8 @@ import os
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi(os.getenv('ACCESS_TOKEN'))
-handler = WebhookHandler(os.getenv('SECRET'))
+line_bot_api = LineBotApi(os.getenv("ACCESS_TOKEN"))
+handler = WebhookHandler(os.getenv("SECRET"))
 
 
 @app.route("/callback", methods=["POST"])
@@ -29,6 +29,15 @@ def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token, TextSendMessage(text=event.message.text)
     )
+
+
+@app.route("/sendSchedule", methods=["POST"])
+def sendSchedule():
+    text = "Hello World"
+    try:
+        line_bot_api.broadcast(messages=TextSendMessage(text=text))
+    except InvalidSignatureError:
+        abort(400)
 
 
 if __name__ == "__main__":
