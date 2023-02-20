@@ -8,13 +8,8 @@ import datetime
 
 app = Flask(__name__)
 
-# line_bot_api = LineBotApi(os.getenv("ACCESS_TOKEN"))
-# handler = WebhookHandler(os.getenv("SECRET"))
-
-ACCESS_TOKEN = "38Be5uBTrlqnY9d+CQToiVTEPCXHQFt7kUJJElJRtxibM/IESXmxOdrPsjo4Zyc6XVaeJ/s9OmbjoxEnrd/lIOfJohrq47bUNlr24sT1cg+G6R9CnUgEIShMz/PIW/5urANQQO8ShTwc4FvJgPzQnwdB04t89/1O/w1cDnyilFU="
-SECRET = "b318448d3c466a165e919d60399bc41a"
-line_bot_api = LineBotApi(ACCESS_TOKEN)
-handler = WebhookHandler(SECRET)
+line_bot_api = LineBotApi(os.getenv("ACCESS_TOKEN"))
+handler = WebhookHandler(os.getenv("SECRET"))
 
 
 @app.route("/callback", methods=["POST"])
@@ -68,10 +63,11 @@ def sendSchedule():
                     text += f"内容：{line[4]}\n"
                     text += "----------"
     print(text)
-    try:
-        line_bot_api.broadcast(messages=TextSendMessage(text=text))
-    except InvalidSignatureError:
-        abort(400)
+    if text != "":
+        try:
+            line_bot_api.broadcast(messages=TextSendMessage(text=text))
+        except InvalidSignatureError:
+            abort(400)
 
 
 if __name__ == "__main__":
