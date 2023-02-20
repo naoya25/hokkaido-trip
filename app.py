@@ -27,14 +27,7 @@ def callback():
 
 
 @handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token, TextSendMessage(text=event.message.text)
-    )
-
-
-@app.route("/sendSchedule", methods=["POST"])
-def sendSchedule():
+def handle_message():
     text = "通知テスト"
     dt_now = datetime.datetime.now()
     today = f"{dt_now.month}/{dt_now.day}"
@@ -63,7 +56,6 @@ def sendSchedule():
                     text += f"内容：{line[4]}\n"
                     text += "----------"
     print(text)
-    text = ""
     line_bot_api.broadcast(messages=TextSendMessage(text=text))
 
 
