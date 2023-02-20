@@ -35,7 +35,7 @@ def handle_message(event):
 
 @app.route("/sendSchedule", methods=["POST"])
 def sendSchedule():
-    text = ""
+    text = "通知テスト"
     dt_now = datetime.datetime.now()
     today = f"{dt_now.month}/{dt_now.day}"
 
@@ -45,7 +45,7 @@ def sendSchedule():
             if today == line[0]:
                 if (
                     dt_now + datetime.timedelta(minutes=30)
-                    < datetime.datetime(
+                    <= datetime.datetime(
                         int(dt_now.year),
                         int(dt_now.month),
                         int(dt_now.day),
@@ -53,7 +53,7 @@ def sendSchedule():
                         int(line[1].split(":")[1]),
                         0,
                     )
-                    < dt_now + datetime.timedelta(hours=1)
+                    <= dt_now + datetime.timedelta(hours=1)
                 ):
                     text += "次のスケジュール\n"
                     text += "----------\n"
